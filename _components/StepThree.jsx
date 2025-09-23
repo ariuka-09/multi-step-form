@@ -2,6 +2,9 @@ import { ContinueButton } from "./ContinueButton";
 import { TextField } from "./TextField";
 
 export function StepThree(props) {
+  const onClickHandle = (event) => {
+    console.log(event);
+  };
   const { currentIndex, setCurrentIndex } = props;
   return (
     <div className="flex justify-center items-center h-[100vh] bg-[#eae1e1] ">
@@ -18,20 +21,23 @@ export function StepThree(props) {
             </p>
           </div>
           <div>
-            <TextField type="date" label="Date of birth *"></TextField>
-            <TextField type="picture" label="Date of birth *"></TextField>
+            <form action="">
+              <TextField type="date" label="Date of birth *"></TextField>
+              <TextField type="file" label="Date of birth *"></TextField>
+              <div className="flex">
+                <ContinueButton
+                  type="back"
+                  currentIndex={currentIndex}
+                  setCurrentIndex={setCurrentIndex}
+                ></ContinueButton>
+                <ContinueButton
+                  onClickHandle={() => onClickHandle(event)}
+                  currentIndex={currentIndex}
+                  setCurrentIndex={setCurrentIndex}
+                ></ContinueButton>
+              </div>
+            </form>
           </div>
-        </div>
-        <div className="flex">
-          <ContinueButton
-            type="back"
-            currentIndex={currentIndex}
-            setCurrentIndex={setCurrentIndex}
-          ></ContinueButton>
-          <ContinueButton
-            currentIndex={currentIndex}
-            setCurrentIndex={setCurrentIndex}
-          ></ContinueButton>
         </div>
       </div>
     </div>

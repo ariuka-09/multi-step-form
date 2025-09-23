@@ -1,3 +1,5 @@
+import { ContinueButton } from "./ContinueButton";
+
 export function AllSet(props) {
   const { currentIndex } = props;
   return (
@@ -14,6 +16,7 @@ export function AllSet(props) {
               We've received your submission. Thank you!
             </p>
           </div>
+          <ContinueButton type="back"></ContinueButton>
         </div>
       </div>
     </div>

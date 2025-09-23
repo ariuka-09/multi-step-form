@@ -1,7 +1,11 @@
+"use client";
 import { ContinueButton } from "./ContinueButton";
 import { TextField } from "./TextField";
 
 export function StepOne(props) {
+  const onClickHandle = (event) => {
+    console.log("working");
+  };
   const { currentIndex, setCurrentIndex } = props;
   return (
     <div className="flex justify-center items-center h-[100vh] bg-[#eae1e1] ">
@@ -18,25 +22,29 @@ export function StepOne(props) {
             </p>
           </div>
           <div className="gap-2 flex flex-col">
-            <TextField
-              label="First name *"
-              placeholder={"Your first name"}
-            ></TextField>
-            <TextField
-              label="Last name *"
-              placeholder={"Your last name"}
-            ></TextField>
-            <TextField
-              label="Username *"
-              placeholder={"Your username"}
-            ></TextField>
+            <form onSubmit={onClickHandle}>
+              {/* <label htmlFor="name">name</label>
+              <input type="text" id="name" name="the_name_is" />
+              <button className="bg-black w-5 h-5">af</button> */}
+              <TextField
+                label="First name *"
+                placeholder={"Your first name"}
+              ></TextField>
+              <TextField
+                label="Last name *"
+                placeholder={"Your last name"}
+              ></TextField>
+              <TextField
+                label="Username *"
+                placeholder={"Your username"}
+              ></TextField>
+              <ContinueButton
+                currentIndex={currentIndex}
+                setCurrentIndex={setCurrentIndex}
+              ></ContinueButton>
+            </form>
           </div>
         </div>
-
-        <ContinueButton
-          currentIndex={currentIndex}
-          setCurrentIndex={setCurrentIndex}
-        ></ContinueButton>
       </div>
     </div>
   );
