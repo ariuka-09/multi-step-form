@@ -9,6 +9,37 @@ export function StepTwo(props) {
   const onClickHandle = (event) => {
     console.log(event);
   };
+  const [error, setError] = useState({});
+  const validate = (data) => {
+    const errors = {};
+    const email = data.get("Email *");
+    const number = data.get("Phone number *");
+    const password = data.get("Password *");
+    const confirmation = data.get("Confirm password *");
+    if (!email) {
+      errors.email = "please enter a valid email";
+    }
+    if (!number) {
+      errors.number = "please enter a valid number";
+    }
+    if (password.length < 6) {
+      errors.password = "too short password";
+    }
+    if (confirmation !== password) {
+      errors.confirmation = "enter the same password";
+    }
+    setError(errors);
+    return Object.keys(errors).length == 0;
+  };
+  const onSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData(event.target);
+    if (!validate(data)) {
+      return null;
+    }
+    setCurrentIndex((prev) => prev + 1);
+  };
+
   return (
     <div className="flex justify-center items-center h-[100vh] bg-[#eae1e1] ">
       <div className="flex flex-col items-center gap-40.5 bg-white p-8 rounded-[8px] ">
@@ -24,8 +55,11 @@ export function StepTwo(props) {
             </p>
           </div>
           <div className="flex flex-col gap-2">
-            <form action="" className="">
+            <form action="" className="" onSubmit={onSubmit}>
               <TextField placeholder={"Your email"} label="Email *"></TextField>
+              {error.email && (
+                <p className="w-fit text-red-400">{error.email}</p>
+              )}
               <TextField
                 placeholder={"Your phone number"}
                 label="Phone number *"
@@ -67,6 +101,7 @@ export function StepTwo(props) {
                 ></ContinueButton>
 
                 <ContinueButton
+                  type="submit"
                   onClickHandle={() => onClickHandle(event)}
                   currentIndex={currentIndex}
                   setCurrentIndex={setCurrentIndex}
