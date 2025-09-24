@@ -31,12 +31,13 @@ export function ContinueButton(props) {
 
     // }
 
-    <div
-      onClick={() => {
-        type == "back"
-          ? setCurrentIndex(currentIndex - 1)
-          : setCurrentIndex(currentIndex + 1);
-      }}
+    <button
+      type={type == "back" ? null : "submit"}
+      // onClick={() => {
+      //   type == "back"
+      //     ? setCurrentIndex(currentIndex - 1)
+      //     : setCurrentIndex(currentIndex + 1);
+      // }}
       className={`h-[44px] mt-30 rounded-[6px] border-[1px] flex items-center justify-center ${
         type == "back"
           ? currentIndex == 0
@@ -52,7 +53,7 @@ export function ContinueButton(props) {
             : `Submit 3 / 3`
           : "Back"
       }`}</p>
-    </div>
+    </button>
   );
 }
 // }

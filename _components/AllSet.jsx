@@ -16,7 +16,6 @@ export function AllSet(props) {
               We've received your submission. Thank you!
             </p>
           </div>
-          <ContinueButton type="back"></ContinueButton>
         </div>
       </div>
     </div>
