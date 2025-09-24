@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 export function TextField(props) {
-  const { placeholder, label, type, isRequired, hideButton } = props;
+  const { placeholder, label, type, isRequired, hideButton, onChange } = props;
   const [text, setText] = useState("");
   return (
     <div className="flex flex-col w-[348px] h-fit gap-1  ">
@@ -18,6 +18,7 @@ export function TextField(props) {
         value={text}
         onChange={(e) => {
           setText(e.target.value);
+          onChange();
         }}
       ></input>
     </div>

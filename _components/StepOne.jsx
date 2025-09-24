@@ -7,18 +7,27 @@ export function StepOne({ currentIndex, setCurrentIndex }) {
 
   const validate = (data) => {
     const errors = {};
-    const name = data.get("name");
+    const name = data.get("First name *");
+    const lastName = data.get("Last name *");
+    const username = data.get("Username *");
     if (!name) {
-      errors.name = "is empty";
+      errors.name = "please provide a valid name";
+    }
+    if (!lastName) {
+      errors.lastName = "please provide a valid last name";
+    }
+    if (!username) {
+      errors.username = "username is empty";
     }
 
     setError(errors);
-    console.log(errors);
+    console.log(error);
     return Object.keys(errors).length === 0;
   };
 
   const onSubmit = (event) => {
     event.preventDefault();
+
     const data = new FormData(event.target);
     if (!validate(data)) {
       return null;
@@ -41,26 +50,39 @@ export function StepOne({ currentIndex, setCurrentIndex }) {
               Please provide all current information accurately.
             </p>
           </div>
-          <div className="gap-2 flex flex-col">
+          <div className="flex flex-col">
             <form onSubmit={onSubmit}>
               <TextField
                 // isEmpty={isEmpty}
-                label="name"
+                label="First name *"
                 placeholder={"Your first name"}
+                onChange={() => {
+                  setError({ ...error, name: undefined });
+                }}
               ></TextField>
-              {error.name && (
-                <p className="h-10 w-20 text-red-400">{error.name}</p>
-              )}
+              {error.name && <p className="w-fit text-red-400">{error.name}</p>}
               <TextField
                 // isEmpty={isEmpty}
                 label="Last name *"
                 placeholder={"Your last name"}
+                onChange={() => {
+                  setError({ ...error, lastName: undefined });
+                }}
               ></TextField>
+              {error.lastName && (
+                <p className="w-fit text-red-400">{error.lastName}</p>
+              )}
               <TextField
                 // isEmpty={isEmpty}
                 label="Username *"
                 placeholder={"Your username"}
+                onChange={() => {
+                  setError({ ...error, username: undefined });
+                }}
               ></TextField>
+              {error.username && (
+                <p className="w-fit text-red-400">{error.username}</p>
+              )}
               {/* <button type="submit">submit</button> */}
               <ContinueButton
                 // isEmpty={isEmpty}
