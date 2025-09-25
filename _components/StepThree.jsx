@@ -6,6 +6,19 @@ export function StepThree(props) {
     console.log(event);
   };
   const { currentIndex, setCurrentIndex } = props;
+  const onSubmit = (event) => {
+    event.preventDefault();
+
+    const data = new FormData(event.target);
+    // if (!validate(data)) {
+    //   return null;
+    // }
+    // setCurrentIndex((previous) => previous + 1);
+    // console.log("working");
+    const date = data.get("Date of birth *");
+    const numberDate = Number(date[0] + date[1] + date[2] + date[3]);
+    console.log(numberDate);
+  };
   return (
     <div className="flex justify-center items-center h-[100vh] bg-[#eae1e1] ">
       <div className="flex flex-col items-center gap-40.5 bg-white p-8 rounded-[8px] ">
@@ -21,8 +34,12 @@ export function StepThree(props) {
             </p>
           </div>
           <div>
-            <form action="">
-              <TextField type="date" label="Date of birth *"></TextField>
+            <form action="" onSubmit={onSubmit}>
+              <TextField
+                type="date"
+                label="Date of birth *"
+                name="Date of birth *"
+              ></TextField>
               <TextField type="file" label="Date of birth *"></TextField>
               <div className="flex">
                 <ContinueButton

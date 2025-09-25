@@ -12,14 +12,14 @@ export function StepTwo(props) {
   const [error, setError] = useState({});
   const validate = (data) => {
     const errors = {};
-    const email = data.get("Email *");
-    const number = data.get("Phone number *");
-    const password = data.get("Password *");
-    const confirmation = data.get("Confirm password *");
-    if (!email) {
+    const email = data.get("Email");
+    const number = data.get("Phone number");
+    const password = data.get("Password");
+    const confirmation = data.get("Confirm password");
+    if (!email.includes("@") || !email.includes(".")) {
       errors.email = "please enter a valid email";
     }
-    if (!number) {
+    if (number.length !== 8) {
       errors.number = "please enter a valid number";
     }
     if (password.length < 6) {
@@ -34,10 +34,17 @@ export function StepTwo(props) {
   const onSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.target);
+    localStorage.setItem("Email", data.get("Email"));
+    localStorage.setItem("Phone number", data.get("Phone number"));
+    localStorage.setItem("Password", data.get("Password"));
+    localStorage.setItem("Confirm password", data.get("Confirm password"));
+
     if (!validate(data)) {
       return null;
     }
+
     setCurrentIndex((prev) => prev + 1);
+    localStorage.setItem("currentIndex", 3);
   };
 
   return (
@@ -56,42 +63,69 @@ export function StepTwo(props) {
           </div>
           <div className="flex flex-col gap-2">
             <form action="" className="" onSubmit={onSubmit}>
-              <TextField placeholder={"Your email"} label="Email *"></TextField>
+              <TextField
+                placeholder={"Your email"}
+                label="Email"
+                onChange={() => {
+                  setError({ ...error, email: undefined });
+                }}
+              ></TextField>
               {error.email && (
                 <p className="w-fit text-red-400">{error.email}</p>
               )}
               <TextField
                 placeholder={"Your phone number"}
-                label="Phone number *"
+                label="Phone number"
+                onChange={() => {
+                  setError({ ...error, number: undefined });
+                }}
               ></TextField>
+              {error.number && (
+                <p className="w-fit text-red-400">{error.number}</p>
+              )}
+
               <TextField
                 placeholder={"Your password"}
-                label="Password *"
+                label="Password"
                 type="password"
+                onChange={() => {
+                  setError({ ...error, password: undefined });
+                }}
               ></TextField>
-              <div className="flex relative">
-                <TextField
-                  placeholder={"Confirm password"}
-                  label="Confirm password *"
-                  type={hide ? "password" : "text"}
-                ></TextField>
-                <div>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="bi bi-eye absolute right-20 top-10.5"
-                    viewBox="0 0 16 16"
-                    onClick={() => {
-                      setHide(!hide);
-                      console.log(hide);
+              {error.password && (
+                <p className="w-fit text-red-400">{error.password}</p>
+              )}
+              <div>
+                <div className="flex relative">
+                  <TextField
+                    placeholder={"Confirm password"}
+                    label="Confirm password"
+                    type={hide ? "password" : "text"}
+                    onChange={() => {
+                      setError({ ...error, confirmation: undefined });
                     }}
-                  >
-                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
-                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
-                  </svg>
+                  ></TextField>
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      className="bi bi-eye absolute right-20 top-10.5"
+                      viewBox="0 0 16 16"
+                      onClick={() => {
+                        setHide(!hide);
+                        console.log(hide);
+                      }}
+                    >
+                      <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
+                      <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
+                    </svg>
+                  </div>
                 </div>
+                {error.confirmation && (
+                  <p className="w-fit text-red-400">{error.confirmation}</p>
+                )}
               </div>
               <div className="flex">
                 <ContinueButton

@@ -1,15 +1,15 @@
 "use client";
 import { ContinueButton } from "./ContinueButton";
 import { TextField } from "./TextField";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 export function StepOne({ currentIndex, setCurrentIndex }) {
   const [error, setError] = useState({});
 
   const validate = (data) => {
     const errors = {};
-    const name = data.get("First name *");
-    const lastName = data.get("Last name *");
-    const username = data.get("Username *");
+    const name = data.get("First name");
+    const lastName = data.get("Last name");
+    const username = data.get("Username");
     if (!name) {
       errors.name = "please provide a valid name";
     }
@@ -25,20 +25,35 @@ export function StepOne({ currentIndex, setCurrentIndex }) {
     return Object.keys(errors).length === 0;
   };
 
+  // useEffect(() => {
+  //   localStorage.setItem("count", currentIndex);
+  // }, [currentIndex]);
+  // useEffect(() => {
+  //   localStorage.setItem("count", currentIndex);
+  // }, [currentIndex]);
+
   const onSubmit = (event) => {
     event.preventDefault();
 
     const data = new FormData(event.target);
+
+    localStorage.setItem("First name", data.get("First name"));
+    localStorage.setItem("Last name", data.get("Last name"));
+    localStorage.setItem("Username", data.get("Username"));
+
     if (!validate(data)) {
       return null;
     }
+
     setCurrentIndex((previous) => previous + 1);
+    localStorage.setItem("currentIndex", currentIndex + 2);
+    console.log(currentIndex);
     console.log("working");
   };
 
   return (
-    <div className="flex justify-center items-center h-[100vh] bg-[#eae1e1] ">
-      <div className="flex flex-col items-center gap-40.5 bg-white p-8 rounded-[8px] ">
+    <div className="flex justify-center items-center h-[100vh] bg-white ">
+      <div className="flex flex-col items-center gap-40.5 bg-white p-8 rounded-[8px] shadow-2xl ">
         <div className="flex flex-col gap-7">
           <div>
             <img
@@ -54,7 +69,8 @@ export function StepOne({ currentIndex, setCurrentIndex }) {
             <form onSubmit={onSubmit}>
               <TextField
                 // isEmpty={isEmpty}
-                label="First name *"
+                label="First name"
+                isRequired={true}
                 placeholder={"Your first name"}
                 onChange={() => {
                   setError({ ...error, name: undefined });
@@ -63,7 +79,7 @@ export function StepOne({ currentIndex, setCurrentIndex }) {
               {error.name && <p className="w-fit text-red-400">{error.name}</p>}
               <TextField
                 // isEmpty={isEmpty}
-                label="Last name *"
+                label="Last name"
                 placeholder={"Your last name"}
                 onChange={() => {
                   setError({ ...error, lastName: undefined });
@@ -74,7 +90,7 @@ export function StepOne({ currentIndex, setCurrentIndex }) {
               )}
               <TextField
                 // isEmpty={isEmpty}
-                label="Username *"
+                label="Username"
                 placeholder={"Your username"}
                 onChange={() => {
                   setError({ ...error, username: undefined });

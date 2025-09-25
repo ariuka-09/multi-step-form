@@ -1,12 +1,15 @@
 "use client";
-import { useState } from "react";
+import react, { useState } from "react";
 export function TextField(props) {
   const { placeholder, label, type, isRequired, hideButton, onChange } = props;
   const [text, setText] = useState("");
+  const defaultValue = localStorage.getItem(label);
+
   return (
     <div className="flex flex-col w-[348px] h-fit gap-1  ">
       <label htmlFor={label} name={label} className="font-bold">
         {label}
+        {isRequired && <span>*</span>}
       </label>
 
       <input
@@ -15,7 +18,7 @@ export function TextField(props) {
         className="rounded-[8px] w-[348px] h-[44px] border-2 px-3 active:border-blue-400 hover:border-gray-400"
         name={label}
         id={label}
-        value={text}
+        defaultValue={defaultValue}
         onChange={(e) => {
           setText(e.target.value);
           onChange();
