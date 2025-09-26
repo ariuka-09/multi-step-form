@@ -53,7 +53,7 @@ export function StepOne({ currentIndex, setCurrentIndex }) {
   };
 
   return (
-    <div className="flex justify-center items-center h-[100vh] bg-white ">
+    <div className="flex justify-center items-center h-[100vh] bg-white text-black ">
       <div className="flex flex-col items-center gap-40.5 bg-white p-8 rounded-[8px] shadow-2xl ">
         <div className="flex flex-col gap-7">
           <div>

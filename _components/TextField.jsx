@@ -15,7 +15,7 @@ export function TextField(props) {
       <input
         type={type}
         placeholder={placeholder}
-        className="rounded-[8px] w-[348px] h-[44px] border-2 px-3 active:border-blue-400 hover:border-gray-400"
+        className="rounded-[8px] w-[348px] h-[44px] border-2 px-3 active:border-blue-400 hover:border-gray-400 text-black"
         name={label}
         id={label}
         defaultValue={defaultValue}

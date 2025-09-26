@@ -30,7 +30,7 @@ export function StepThree(props) {
     const numberDate = Number(date[0] + date[1] + date[2] + date[3]);
     console.log(numberDate);
     setCurrentIndex(currentIndex + 1);
-
+console.log()
     event.preventDefault();
 
     if (!validate(data, numberDate)) {
@@ -41,7 +41,7 @@ export function StepThree(props) {
     localStorage.setItem("currentIndex", 3);
   };
   return (
-    <div className="flex justify-center items-center h-[100vh] bg-[#eae1e1] ">
+    <div className="flex justify-center items-center h-[100vh] bg-[#eae1e1] text-black">
       <div className="flex flex-col items-center gap-40.5 bg-white p-8 rounded-[8px] ">
         <div className="flex flex-col gap-7">
           <div>
@@ -70,7 +70,7 @@ export function StepThree(props) {
                   setCurrentIndex={setCurrentIndex}
                 ></ContinueButton>
                 <ContinueButton
-                  onClickHandle={() => onClickHandle(event)}
+                type="submit"
                   currentIndex={currentIndex}
                   setCurrentIndex={setCurrentIndex}
                 ></ContinueButton>
