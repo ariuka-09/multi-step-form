@@ -10,16 +10,19 @@ export function StepTwo(props) {
     console.log(event);
   };
   const [error, setError] = useState({});
+
   const validate = (data) => {
     const errors = {};
     const email = data.get("Email");
     const number = data.get("Phone number");
     const password = data.get("Password");
     const confirmation = data.get("Confirm password");
-    if (!email.includes("@") || !email.includes(".")) {
+    let validMail = email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+    if (!validMail) {
       errors.email = "please enter a valid email";
     }
-    if (number.length !== 8) {
+    let validNumber = number.match(/^\+?\d{8}$/);
+    if (!validNumber) {
       errors.number = "please enter a valid number";
     }
     if (password.length < 6) {

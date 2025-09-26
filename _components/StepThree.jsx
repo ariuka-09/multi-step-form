@@ -1,23 +1,44 @@
+import { useState } from "react";
 import { ContinueButton } from "./ContinueButton";
 import { TextField } from "./TextField";
 
 export function StepThree(props) {
-  const onClickHandle = (event) => {
-    console.log(event);
-  };
   const { currentIndex, setCurrentIndex } = props;
+  const [error, setError] = useState({});
+
+  const validate = (data, numberDate) => {
+    const errors = {};
+    const date = data.get("Date of birth");
+
+    if (!date && 2025) {
+      errors.date = "please provide a valid date";
+    }
+    if (2025 - numberDate < 18) {
+      errors.date = "you have to be 18 or older";
+    }
+    console.log(numberDate);
+    setError(errors);
+    console.log(error);
+    return Object.keys(errors).length === 0;
+  };
+
   const onSubmit = (event) => {
     event.preventDefault();
-
     const data = new FormData(event.target);
-    // if (!validate(data)) {
-    //   return null;
-    // }
-    // setCurrentIndex((previous) => previous + 1);
-    // console.log("working");
-    const date = data.get("Date of birth *");
+    localStorage.setItem("Date of birth", data.get("Date of birth"));
+    const date = data.get("Date of birth");
     const numberDate = Number(date[0] + date[1] + date[2] + date[3]);
     console.log(numberDate);
+    setCurrentIndex(currentIndex + 1);
+
+    event.preventDefault();
+
+    if (!validate(data, numberDate)) {
+      return null;
+    }
+
+    // setCurrentIndex((prev) => prev + 1);
+    localStorage.setItem("currentIndex", 3);
   };
   return (
     <div className="flex justify-center items-center h-[100vh] bg-[#eae1e1] ">
@@ -37,9 +58,10 @@ export function StepThree(props) {
             <form action="" onSubmit={onSubmit}>
               <TextField
                 type="date"
-                label="Date of birth *"
-                name="Date of birth *"
+                label="Date of birth"
+                name="Date of birth"
               ></TextField>
+              {error.date && <p className="text-red-600">{error.date} </p>}
               <TextField type="file" label="Date of birth *"></TextField>
               <div className="flex">
                 <ContinueButton

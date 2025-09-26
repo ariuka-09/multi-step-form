@@ -2,6 +2,7 @@
 import { ContinueButton } from "./ContinueButton";
 import { TextField } from "./TextField";
 import { useState, useEffect } from "react";
+
 export function StepOne({ currentIndex, setCurrentIndex }) {
   const [error, setError] = useState({});
 
@@ -80,6 +81,7 @@ export function StepOne({ currentIndex, setCurrentIndex }) {
               <TextField
                 // isEmpty={isEmpty}
                 label="Last name"
+                isRequired={true}
                 placeholder={"Your last name"}
                 onChange={() => {
                   setError({ ...error, lastName: undefined });
@@ -91,6 +93,7 @@ export function StepOne({ currentIndex, setCurrentIndex }) {
               <TextField
                 // isEmpty={isEmpty}
                 label="Username"
+                isRequired={true}
                 placeholder={"Your username"}
                 onChange={() => {
                   setError({ ...error, username: undefined });
