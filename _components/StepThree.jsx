@@ -9,16 +9,22 @@ export function StepThree(props) {
   const validate = (data, numberDate) => {
     const errors = {};
     const date = data.get("Date of birth");
+    console.log(date);
+    if (!date) {
+      console.log("error working");
 
-    if (!date && 2025) {
       errors.date = "please provide a valid date";
     }
+    console.log(errors.date);
+
     if (2025 - numberDate < 18) {
       errors.date = "you have to be 18 or older";
     }
+    console.log(errors.date);
     console.log(numberDate);
+
     setError(errors);
-    console.log(error);
+    console.log(errors);
     return Object.keys(errors).length === 0;
   };
 
@@ -29,8 +35,7 @@ export function StepThree(props) {
     const date = data.get("Date of birth");
     const numberDate = Number(date[0] + date[1] + date[2] + date[3]);
     console.log(numberDate);
-    setCurrentIndex(currentIndex + 1);
-console.log()
+
     event.preventDefault();
 
     if (!validate(data, numberDate)) {
@@ -39,6 +44,7 @@ console.log()
 
     // setCurrentIndex((prev) => prev + 1);
     localStorage.setItem("currentIndex", 3);
+    setCurrentIndex(currentIndex + 1);
   };
   return (
     <div className="flex justify-center items-center h-[100vh] bg-[#eae1e1] text-black">
@@ -60,6 +66,9 @@ console.log()
                 type="date"
                 label="Date of birth"
                 name="Date of birth"
+                onChange={() => {
+                  setError({ ...error, date: undefined });
+                }}
               ></TextField>
               {error.date && <p className="text-red-600">{error.date} </p>}
               <TextField type="file" label="Date of birth *"></TextField>
@@ -70,7 +79,7 @@ console.log()
                   setCurrentIndex={setCurrentIndex}
                 ></ContinueButton>
                 <ContinueButton
-                type="submit"
+                  type="submit"
                   currentIndex={currentIndex}
                   setCurrentIndex={setCurrentIndex}
                 ></ContinueButton>
