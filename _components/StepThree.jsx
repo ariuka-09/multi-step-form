@@ -5,7 +5,15 @@ import { TextField } from "./TextField";
 export function StepThree(props) {
   const { currentIndex, setCurrentIndex } = props;
   const [error, setError] = useState({});
+  const [file, setFile] = useState(null);
 
+  const handleImgChange = (e) => {
+    const chosenfile = e.target.files[0];
+    console.log("working");
+    if (chosenfile) {
+      setFile(chosenfile);
+    }
+  };
   const validate = (data, numberDate) => {
     const errors = {};
     const date = data.get("Date of birth");
@@ -44,11 +52,11 @@ export function StepThree(props) {
 
     // setCurrentIndex((prev) => prev + 1);
     localStorage.setItem("currentIndex", 3);
-    setCurrentIndex(currentIndex + 1);
+    // setCurrentIndex(currentIndex + 1);
   };
   return (
-    <div className="flex justify-center items-center h-[100vh] bg-[#eae1e1] text-black">
-      <div className="flex flex-col items-center gap-40.5 bg-white p-8 rounded-[8px] ">
+    <div className="flex justify-center items-center h-[100vh] bg-[#white] text-black">
+      <div className="flex flex-col items-center gap-40.5 bg-white p-8 shadow-2xl rounded-[8px] ">
         <div className="flex flex-col gap-7">
           <div>
             <img
@@ -68,10 +76,27 @@ export function StepThree(props) {
                 name="Date of birth"
                 onChange={() => {
                   setError({ ...error, date: undefined });
+                  console.log("working");
                 }}
               ></TextField>
               {error.date && <p className="text-red-600">{error.date} </p>}
-              <TextField type="file" label="Date of birth *"></TextField>
+              <TextField
+                type="file"
+                label="Profile picture"
+                accept="image/*"
+                onChange={handleImgChange}
+                style="file"
+              />
+              {file && (
+                <div>
+                  <p>Preview:</p>
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt=""
+                    className="w-40 h-40 object-cover border rounded"
+                  />
+                </div>
+              )}
               <div className="flex">
                 <ContinueButton
                   type="back"
