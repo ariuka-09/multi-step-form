@@ -50,7 +50,7 @@ export function StepThree(props) {
       return null;
     }
 
-    // setCurrentIndex((prev) => prev + 1);
+    setCurrentIndex((prev) => prev + 1);
     localStorage.setItem("currentIndex", 3);
     // setCurrentIndex(currentIndex + 1);
   };
